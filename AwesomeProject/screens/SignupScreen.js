@@ -2,28 +2,17 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button, Image} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Logo from './components/Logo';
-import Form from './components/Form';
+import SignupForm from './components/SignupForm';
 
 
-export default class LoginScreen extends Component {
-  onClickSignup = () => {
-    this.props.navigation.navigate('SignupScreen');
-  }
+export default class SignupScreen extends Component {
+
   render() {
     return (
       <View style={styles.container}>
         <Logo/>
-        <Text style={styles.welcome}>LoginScreen</Text>
-        <Form/>
-
-        <View style={styles.signupText}>
-          <Text>Don't have an account yet?</Text>
-          <Text onPress={
-            (e) => {
-              this.onClickSignup();
-            }
-          } style={styles.signupButton}> Signup</Text>
-        </View>
+        <Text style={styles.welcome}>SignupScreen</Text>
+        <SignupForm/>
       </View>
     );
   }
