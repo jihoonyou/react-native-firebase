@@ -1,23 +1,52 @@
 import React, {Component} from 'react';
 import { StyleSheet,View, Button } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import firebase from 'firebase';
 
 export default class SignupForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = ({
+      email: '',
+      password: ''
+    });
+  }
+  
+  signupUser = (email, password) => {
+  
+    
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // [START_EXCLUDE]
+      if (errorCode == 'auth/weak-password') {
+        alert('The password is too weak.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+      // [END_EXCLUDE]
+    });
+  }
+
   render() {
     return (
       <View style={styles.form}>
-        <TextInput style={styles.textinput} placeholder="Email"
-        underlineColorAndroid='rgba(0, 0, 0, 0)'
-        placeholderTextColor= "#fff"
-        ></TextInput>
-        <TextInput style={styles.textinput} placeholder="Password"
-        secureTextEntry
-        underlineColorAndroid='rgba(0, 0, 0, 0)'
-        placeholderTextColor= "#fff"
-        ></TextInput>
-        <Button title="Signup" 
-        onPress={() => alert('button pressed')}/>
-      </View>
+      <TextInput style={styles.textinput} placeholder="Email"
+      underlineColorAndroid='rgba(0, 0, 0, 0)'
+      placeholderTextColor= "#fff"
+      onChangeText={(email) => this.setState({ email })}
+      ></TextInput>
+      <TextInput style={styles.textinput} placeholder="Password"
+      secureTextEntry
+      underlineColorAndroid='rgba(0, 0, 0, 0)'
+      placeholderTextColor= "#fff"
+      onChangeText={(password) => this.setState({ password })}
+      ></TextInput>
+      <Button title="Signup" 
+      onPress={() => this.signupUser(this.state.email, this.state.password)}/>
+    </View>
     );
   }
 }
