@@ -12,7 +12,13 @@ export default class LoadingScreen extends Component {
       firebase.auth().onAuthStateChanged((user) => {
         
         if(user) {
-          this.props.navigation.navigate('DashboardScreen');
+          if(user.emailVerified) {
+            this.props.navigation.navigate('DashboardScreen');
+          }
+          else {
+            this.props.navigation.navigate('VerificationScreen');
+          }
+          
         }
         else {
           this.props.navigation.navigate('LoginScreen');

@@ -28,6 +28,7 @@ export default class SignupForm extends Component {
       }).catch(function(error) {
       // An error happened.
       });
+
   })
     .catch(function(error) {
       // Handle Errors here.
