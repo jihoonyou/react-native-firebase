@@ -13,12 +13,20 @@ export default class SignupForm extends Component {
   }
   
   signupUser = (email, password) => {
+    //once input fields defined, add input data here.
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
       let currUser = firebase.auth().currentUser;
       firebase.database().ref('users/' + currUser.uid).set({
         username: "name",
         email: currUser.email,
         profile_picture : "imageUrl"
+      });
+      //send verification email here
+      var user = firebase.auth().currentUser;
+      user.sendEmailVerification().then(function() {
+      // Email sent.
+      }).catch(function(error) {
+      // An error happened.
       });
   })
     .catch(function(error) {
