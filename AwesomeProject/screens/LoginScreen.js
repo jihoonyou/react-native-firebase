@@ -6,6 +6,8 @@ import Form from './components/Form';
 
 
 export default class LoginScreen extends Component {
+  
+  
   onClickSignup = () => {
     this.props.navigation.navigate('SignupScreen');
   }

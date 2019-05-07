@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, Button, Image} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Logo from './components/Logo';
 import SignupForm from './components/SignupForm';
-import firebase from 'firebase';
+
 
 
 export default class SignupScreen extends Component {
