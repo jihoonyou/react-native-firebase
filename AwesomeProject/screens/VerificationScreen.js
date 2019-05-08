@@ -9,17 +9,27 @@ import firebase from 'firebase';
 export default class VerificationScreen extends Component {
 
     checkVerification = () => {
-        firebase.auth().onAuthStateChanged((user) => {
-            user.reload().then(() => {
-                if(user.emailVerified) {
-                    this.props.navigation.navigate('DashboardScreen');
-                  }
-                  else {
-                    //do nothing
-                  }
-            });
+        let user = firebase.auth().currentUser;
+        user.reload().then(() => {
+            if(user.emailVerified) {
+                this.props.navigation.navigate('DashboardScreen');
+              }
+              else {
+                //do nothing
+              }
+        });
 
-          })
+        // firebase.auth().onAuthStateChanged((user) => {
+        //     user.reload().then(() => {
+        //         if(user.emailVerified) {
+        //             this.props.navigation.navigate('DashboardScreen');
+        //           }
+        //           else {
+        //             //do nothing
+        //           }
+        //     });
+
+        //   })
     }
 
   render() {

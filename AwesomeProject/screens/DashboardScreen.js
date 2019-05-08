@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-
+import {StyleSheet, Text, View, Button} from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import firebase from 'firebase';
 
 class HomeScreen extends React.Component {
   render() {
@@ -33,10 +33,22 @@ class Screen3 extends React.Component {
   }
 }
 class SettingsScreen extends React.Component {
+
+  userSignOut = () => {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+
+      
+    }).catch(function(error) {
+      // An error happened.
+    });
+  }
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Settings!</Text>
+        <Button title='logout' onPress={ (e)=> { this.userSignOut()} }></Button>
       </View>
     );
   }
