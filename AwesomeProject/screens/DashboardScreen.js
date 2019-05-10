@@ -14,9 +14,26 @@ class HomeScreen extends React.Component {
 }
 
 class Screen2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = ({
+      username: ""
+    });
+  }
+
+  componentDidMount() {
+    //추후에 async storage로 
+    let user = firebase.auth().currentUser.uid;
+    
+    firebase.database().ref('users').on('value', (data) => {
+      this.setState({username: data.toJSON()[user].username});
+    })
+  }
+  
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>{this.state.username ? this.state.username : 'updating' }</Text>
         <Text>Screen2!</Text>
       </View>
     );
@@ -27,7 +44,7 @@ class Screen3 extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Screen3!</Text>
+        <Text>Profile</Text>
       </View>
     );
   }
@@ -37,8 +54,6 @@ class SettingsScreen extends React.Component {
   userSignOut = () => {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
-
-      
     }).catch(function(error) {
       // An error happened.
     });
