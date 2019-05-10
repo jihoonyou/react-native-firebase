@@ -41,10 +41,22 @@ class Screen2 extends React.Component {
 }
 
 class Screen3 extends React.Component {
+
+  updateProfile = () => {
+    //추후에 async storage로
+    let user = firebase.auth().currentUser.uid;
+    firebase.database().ref('users/' + user).update({
+      username: "testing",
+    });
+  }
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Profile</Text>
+        <Button title='checking' onPress={() => {
+          this.updateProfile();
+        }}></Button>
       </View>
     );
   }
