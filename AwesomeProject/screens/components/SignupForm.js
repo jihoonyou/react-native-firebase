@@ -8,18 +8,21 @@ export default class SignupForm extends Component {
     super(props);
     this.state = ({
       email: '',
-      password: ''
+      password: '',
+      name: '',
+      phone: '',
     });
   }
   
-  signupUser = (email, password) => {
+  signupUser = (email, password,name,phone) => {
     //once input fields defined, add input data here.
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
       let currUser = firebase.auth().currentUser;
       firebase.database().ref('users/' + currUser.uid).set({
-        username: "name",
         email: currUser.email,
-        profile_picture : "imageUrl"
+        name: name,
+        phone: phone,
+        regDate: currUser.metadata.creationTime
       });
       //send verification email here
       var user = firebase.auth().currentUser;
@@ -59,8 +62,19 @@ export default class SignupForm extends Component {
       placeholderTextColor= "#fff"
       onChangeText={(password) => this.setState({ password })}
       ></TextInput>
+      <TextInput style={styles.textinput} placeholder="Name"
+      underlineColorAndroid='rgba(0, 0, 0, 0)'
+      placeholderTextColor= "#fff"
+      onChangeText={(name) => this.setState({ name })}
+      ></TextInput>
+      <TextInput style={styles.textinput} placeholder="Phone"
+      secureTextEntry
+      underlineColorAndroid='rgba(0, 0, 0, 0)'
+      placeholderTextColor= "#fff"
+      onChangeText={(phone) => this.setState({ phone })}
+      ></TextInput>
       <Button title="Signup" 
-      onPress={() => this.signupUser(this.state.email, this.state.password)}/>
+      onPress={() => this.signupUser(this.state.email, this.state.password, this.state.name, this.state.phone)}/>
     </View>
     );
   }
